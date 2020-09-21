@@ -1,0 +1,7 @@
+type-a-chance: 0.9
+
+user-config:
+  A:
+    value: "A value"
+  B:
+    value: "B value"
