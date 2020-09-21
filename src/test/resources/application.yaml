@@ -3,3 +3,11 @@ spring:
     host: "${embedded.redis.host}"
     port: "${embedded.redis.port}"
     password: "${embedded.redis.password}"
+
+type-a-chance: 0.9
+
+user-config:
+  A:
+    value: "A value"
+  B:
+    value: "B value"

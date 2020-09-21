@@ -2,7 +2,7 @@ package com.test.provider.repository;
 
 import com.test.provider.model.ConfigurationType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.ReactiveRedisOperations;
+import org.springframework.data.redis.core.ReactiveValueOperations;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
@@ -10,18 +10,18 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class RedisConfigurationRepository implements ConfigurationRepository {
 
-    private final ReactiveRedisOperations<String, ConfigurationType> redisOperations;
+    private final ReactiveValueOperations<String, ConfigurationType> configOperations;
 
     @Override
     public Mono<ConfigurationType> save(String userId, ConfigurationType type) {
-        return redisOperations.opsForValue()
+        return configOperations
                 .setIfAbsent(userId, type)
                 .flatMap(res -> res ? Mono.just(type) : find(userId));
     }
 
     @Override
     public Mono<ConfigurationType> find(String userId) {
-        return redisOperations.opsForValue().get(userId);
+        return configOperations.get(userId);
     }
 
 }
